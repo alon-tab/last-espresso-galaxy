@@ -169,23 +169,28 @@
         this.state = "hiss";
         this.cool = 1.1;
         this.spark(this.x + this.dir * 30, this.y - 20, "#8cf4e0", 8);
+        let count = 0;
         for (const d of this.drones) if (Math.abs(d.x - this.x) < 115) {
           d.stun = 3.5;
           d.x += this.dir * 28;
+          count++;
         }
-        this.say("\u05E4\u05E9\u05E9\u05E9... \u05D4\u05E8\u05D5\u05D1\u05D5\u05D8\u05D9\u05DD \u05E2\u05E6\u05E8\u05D5!");
+        this.say(count ? "\u05E4\u05E9\u05E9\u05E9... \u05D4\u05E8\u05D5\u05D1\u05D5\u05D8 \u05D4\u05E7\u05E8\u05D5\u05D1 \u05E2\u05E6\u05E8!" : "\u05E4\u05E9\u05E9\u05E9... \u05D4\u05E8\u05E9\u05D9\u05E4\u05D4 \u05E4\u05D5\u05E2\u05DC\u05EA \u05E8\u05E7 \u05DE\u05E7\u05E8\u05D5\u05D1.");
       }
       if (I.swipe && !this.lastSwipe && this.cool === 0) {
         this.emit("swipe");
         this.action = 0.38;
         this.state = "swipe";
         this.cool = 0.5;
+        let cleared = false;
         for (const gate of this.gates) if (Math.abs(gate.x - this.x) < 76 && !gate.open) {
           gate.open = true;
+          cleared = true;
           this.emit("gate");
           this.spark(gate.x, this.y - 26, "#ffe9a1", 20);
           this.say("\u05D4\u05D3\u05E8\u05DA \u05E4\u05EA\u05D5\u05D7\u05D4!");
         }
+        if (!cleared) this.say("\u05DB\u05E4\u05D4 \u05DE\u05E4\u05E0\u05D4 \u05E2\u05E0\u05E4\u05D9\u05DD \u05DB\u05E9\u05DE\u05EA\u05E7\u05E8\u05D1\u05D9\u05DD \u05D0\u05DC\u05D9\u05D4\u05DD.");
       }
       if (I.dash && this.coffee > 0 && this.boost === 0) {
         this.coffee--;
@@ -407,6 +412,10 @@
         if (d.stun > 0) {
           g.fillStyle = "#ffe9a1";
           g.fillText("z z", d.x - 10, yy - 19);
+          g.fillStyle = "#273349";
+          g.fillRect(d.x - 15, yy - 27, 30, 3);
+          g.fillStyle = "#8be5d5";
+          g.fillRect(d.x - 15, yy - 27, 30 * d.stun / 3.5, 3);
         }
       }
       g.fillStyle = "#6b7692";
@@ -426,6 +435,24 @@
       for (const [x, s] of [[80, "OBSERVATORY 07"], [1190, "MOON GARDEN"], [2460, "ESPRESSO STATION"]]) {
         g.fillText(s, x, 115);
       }
+      for (const k of this.kittens) if (k.got) {
+        g.fillStyle = "#5c5677";
+        g.fillRect(k.x - 18, k.y - 5, 36, 5);
+        g.fillStyle = "#9cebd5";
+        g.fillRect(k.x - 15, k.y - 7, 30, 2);
+        g.strokeStyle = "#9cebd5";
+        g.lineWidth = 2;
+        g.beginPath();
+        g.moveTo(k.x - 5, k.y - 25);
+        g.lineTo(k.x - 1, k.y - 21);
+        g.lineTo(k.x + 7, k.y - 30);
+        g.stroke();
+      }
+      for (const gate of this.gates) if (gate.open) {
+        g.fillStyle = "#9b8bae";
+        g.fillRect(gate.x - 8, 236, 6, 6);
+        g.fillRect(gate.x + 3, 233, 7, 3);
+      }
       let fi = this.frame;
       if (this.state === "jump") {
         if (this.land > 0) fi = 16 + (1 - this.land / 0.2) * 7;
@@ -444,6 +471,38 @@
       }
       g.globalAlpha = 1;
       g.restore();
+      if (this.phase === "play") {
+        let cue = "";
+        const gate = this.gates.find((k) => !k.open && Math.abs(k.x - this.x) < 135 && this.y > 155);
+        const drone = this.drones.find((d) => d.stun === 0 && Math.abs(d.x - this.x) < 145 && Math.abs(d.y - this.y) < 65);
+        if (gate) cue = "\u05E2\u05E0\u05E4\u05D9\u05DD \u05D1\u05D3\u05E8\u05DA \xB7 \u05DE\u05EA\u05E7\u05E8\u05D1\u05D9\u05DD \u05D5\u05D0\u05D6 \u05DB\u05E4\u05D4 C";
+        else if (drone) cue = "\u05E8\u05D5\u05D1\u05D5\u05D8 \u05E7\u05E8\u05D5\u05D1 \xB7 \u05E8\u05E9\u05D9\u05E4\u05D4 X \u05E2\u05D5\u05E6\u05E8\u05EA \u05D0\u05D5\u05EA\u05D5";
+        else if (this.x > 2480 && this.saved < 3) cue = `\u05E2\u05D5\u05D3 ${3 - this.saved} \u05D2\u05D5\u05E8\u05D9\u05DD \u05DE\u05D7\u05DB\u05D9\u05DD \u05DC\u05D7\u05D9\u05DC\u05D5\u05E5`;
+        if (cue) {
+          g.fillStyle = "#152237ed";
+          g.fillRect(65, 12, 350, 26);
+          g.strokeStyle = "#7da6a2";
+          g.lineWidth = 1;
+          g.strokeRect(65.5, 12.5, 349, 25);
+          g.fillStyle = "#e4f5e8";
+          g.font = "12px Arial";
+          g.textAlign = "center";
+          g.direction = "rtl";
+          g.fillText(cue, 240, 29);
+          g.textAlign = "start";
+          g.direction = "ltr";
+        }
+        if (this.boost > 0) {
+          g.fillStyle = "#273349";
+          g.fillRect(190, 45, 100, 4);
+          g.fillStyle = "#ffd887";
+          g.fillRect(190, 45, 100 * this.boost / 2.4, 4);
+        }
+        if (this.inv > 1.25) {
+          g.fillStyle = `rgba(243,166,189,${(this.inv - 1.25) * 0.6})`;
+          g.fillRect(0, 0, 480, 300);
+        }
+      }
       if (this.phase === "ready" || this.phase === "won" || this.phase === "lost") {
         g.fillStyle = "#0b102acc";
         g.fillRect(0, 0, 480, 300);
