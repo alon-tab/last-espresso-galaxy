@@ -25,3 +25,7 @@ Spatial play is not accessible non-visually; buttons have names and the canvas h
 The same engine, atlas, save schema and effect synthesizer are used by the hosted and offline versions. Hosted saves use the viewer's device/account-local state: signed-in viewers can reopen; public anonymous visitors and private previews keep only memory while open. Offline HTML uses browser localStorage, reports storage failures, and remains playable when storage is blocked. Nothing is uploaded or shared from a save.
 
 Tested: reload/continue with position and coffee retained, malformed and incompatible saves rejected, unsafe locations not saved, collected kittens and opened gates retained in engine fixtures, pause/resume, new-game cancel/confirm, sound-off startup and explicit on/mute, denied-storage handling, and the unchanged full input-only route. The browser audio context and note scheduling were checked, not a listening test on physical speakers. Owner-authenticated hosted persistence across reload has not been tested.
+
+## World-feedback pass
+
+One contextual cue appears before blocked branches or a nearby active drone. Hiss/swipe no longer report success when nothing is in range. Stunned drones show a remaining-time strip; rescued cages leave green beacons, opened branches leave a stump, boosts have a duration bar, and damage briefly tints the screen. These are visual/message changes only, not new obstacles or a new level. Route and save/audio regression tests still pass.
