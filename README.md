@@ -33,3 +33,9 @@ One contextual cue appears before blocked branches or a nearby active drone. His
 ## Touch layout check
 
 Simulated Chrome touch verified two-finger move+jump, independent finger release, cancellation and focus-loss pause. Short landscape screens use a shorter, letterboxed scene so movement/action buttons can share the viewport. The compact-view toggle gives the same option in auto-height embedded viewers; regular view remains available. Portrait layouts and game physics are unchanged. This is not a physical phone test.
+
+## First-run guidance and recovery
+
+A persistent objective names the nearest kitten still missing, tells whether it is to the left/right or on a balcony above, and switches to the espresso machine after all three rescues. Contextual prompts teach movement, the first jump and optional coffee use. Drone/branch prompts take priority near those obstacles. Prompts only describe existing controls; physics, difficulty, level geometry and v4 animation are unchanged. Save schema stays v1.
+
+Expert simulation verified each missed kitten: skip it, reach the end, backtrack using only normal inputs, rescue it and finish. The three routes all pass without position/health/world-state writes. This is not an uncoached child playtest. Existing saves, no-coffee-required completion, sound-off, restart and touch regressions still pass.
