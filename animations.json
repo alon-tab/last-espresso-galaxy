@@ -1,0 +1,1 @@
+{"walk": {"row": 0, "n": 13}, "trot": {"row": 1, "n": 8}, "run": {"row": 2, "n": 8}, "stalk": {"row": 3, "n": 16}, "jump": {"row": 4, "n": 24}, "idle": {"row": 5, "n": 1}, "startle": {"row": 6, "n": 5}, "hiss": {"row": 7, "n": 2}, "swipe": {"row": 8, "n": 5}, "hurt": {"row": 9, "n": 3}, "cheer": {"row": 10, "n": 4}, "sit": {"row": 11, "n": 1}, "turn": {"row": 12, "n": 5}}
