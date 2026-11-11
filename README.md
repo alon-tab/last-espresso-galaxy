@@ -4,7 +4,7 @@ First playable chapter: a mint alien cat rescues three kittens in a moon observa
 
 ## Play
 
-Open `index.html` in a browser. It is self-contained: no server, package installation, remote dependencies or API keys. It works offline after downloading.
+Play directly at https://alon-tab.github.io/last-espresso-galaxy/ . Or open `index.html` in a browser. It is self-contained: no server, package installation, remote dependencies or API keys. It works offline after downloading.
 
 Move with arrows or A/D; Space jumps; Shift stalks; X hisses to stun drones; C swipes away branches; E spends one coffee for a speed/jump boost. On touch screens, hold movement and tap an action with another finger. Pause with the pause button or Escape. Restart resets the run. A safe-ground autosave keeps progress in this browser. Use Continue after reopening. New Game asks before deleting the save. Clearing browser data deletes it; there is no cross-device sync. Short synthesized effects start OFF and can be toggled.
 
@@ -29,3 +29,7 @@ Tested: reload/continue with position and coffee retained, malformed and incompa
 ## World-feedback pass
 
 One contextual cue appears before blocked branches or a nearby active drone. Hiss/swipe no longer report success when nothing is in range. Stunned drones show a remaining-time strip; rescued cages leave green beacons, opened branches leave a stump, boosts have a duration bar, and damage briefly tints the screen. These are visual/message changes only, not new obstacles or a new level. Route and save/audio regression tests still pass.
+
+## Touch layout check
+
+Simulated Chrome touch verified two-finger move+jump, independent finger release, cancellation and focus-loss pause. Short landscape screens use a shorter, letterboxed scene so movement/action buttons can share the viewport. The compact-view toggle gives the same option in auto-height embedded viewers; regular view remains available. Portrait layouts and game physics are unchanged. This is not a physical phone test.
